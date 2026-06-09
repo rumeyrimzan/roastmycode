@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roast My Code — AI Developer Score</title>
+<meta name="description" content="Paste your code and get an AI roast + quality score. Or take the dev quiz to find out how good you really are.">
+<meta property="og:title" content="Roast My Code — AI Developer Score">
+<meta property="og:description" content="How good is your code, really? Get roasted by AI and find out.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Roast My Code — AI Developer Score">
+<meta name="twitter:description" content="Paste your code. Get roasted. Share your score.">
+
+<!-- ═══════════════════════════════════════════════════
+     AD SLOT 1 — MONETAG / ADSTERRA HEAD SCRIPT
+     Paste your network <script> tag below this line
+     ════════════════════════════════════════════════ -->
+
+
+<!-- ═══════════════════════════════════════════════════ -->
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0d0d0d;
+    --bg2: #161616;
+    --bg3: #1e1e1e;
+    --border: rgba(255,255,255,0.08);
+    --border2: rgba(255,255,255,0.14);
+    --text: #f0f0f0;
+    --text2: #888;
+    --text3: #555;
+    --accent: #ff4d00;
+    --accent2: #ff6a2a;
+    --green: #1D9E75;
+    --blue: #378ADD;
+    --amber: #BA7517;
+    --orange: #D85A30;
+    --red: #E24B4A;
+    --radius: 10px;
+    --radius-lg: 14px;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .page { max-width: 720px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+
+  .hero { text-align: center; padding: 2.5rem 0 2rem; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,77,0,0.12); border: 0.5px solid rgba(255,77,0,0.3);
+    color: var(--accent2); font-size: 12px; font-weight: 600; letter-spacing: 0.06em;
+    text-transform: uppercase; padding: 4px 12px; border-radius: 20px; margin-bottom: 1.25rem;
+  }
+  .hero h1 { font-size: clamp(26px, 5vw, 42px); font-weight: 700; color: #fff; line-height: 1.15; margin-bottom: 0.75rem; }
+  .hero h1 span { color: var(--accent); }
+  .hero p { font-size: 16px; color: var(--text2); max-width: 480px; margin: 0 auto; }
+
+  .tabs { display: flex; gap: 6px; background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 5px; margin-bottom: 1.5rem; }
+  .tab { flex: 1; padding: 10px; border-radius: var(--radius); border: none; font-size: 14px; font-weight: 600; cursor: pointer; background: transparent; color: var(--text2); transition: all 0.15s; }
+  .tab.active { background: var(--bg3); color: var(--text); border: 0.5px solid var(--border2); }
+  .tab:hover:not(.active) { color: var(--text); }
+
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  .card { background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem; margin-bottom: 1rem; }
+
+  textarea {
+    width: 100%; min-height: 180px; resize: vertical;
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 13px; border: 0.5px solid var(--border2); border-radius: var(--radius);
+    padding: 14px; background: var(--bg3); color: var(--text); line-height: 1.65;
+    outline: none; transition: border-color 0.15s;
+  }
+  textarea:focus { border-color: var(--accent); }
+  textarea::placeholder { color: var(--text3); }
+
+  select { height: 38px; padding: 0 12px; border-radius: var(--radius); border: 0.5px solid var(--border2); background: var(--bg3); color: var(--text); font-size: 14px; outline: none; cursor: pointer; }
+  .lang-row { display: flex; gap: 8px; margin-top: 10px; }
+  .lang-row select { flex: 1; }
+
+  .btn-main { width: 100%; height: 46px; font-size: 15px; font-weight: 700; border-radius: var(--radius); border: none; background: var(--accent); color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 12px; transition: opacity 0.15s, transform 0.1s; letter-spacing: 0.02em; }
+  .btn-main:hover { opacity: 0.88; }
+  .btn-main:active { transform: scale(0.98); }
+  .btn-main:disabled { opacity: 0.35; cursor: not-allowed; }
+  .btn-main.ghost { background: transparent; color: var(--text2); border: 0.5px solid var(--border2); font-weight: 600; }
+  .btn-main.ghost:hover { color: var(--text); }
+
+  .result-box { background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem; margin-top: 1rem; display: none; }
+  .result-box.show { display: block; }
+
+  .score-ring { text-align: center; padding: 1rem 0 1.25rem; }
+  .score-num { font-size: 72px; font-weight: 800; color: #fff; line-height: 1; letter-spacing: -2px; }
+  .score-denom { font-size: 24px; font-weight: 400; color: var(--text2); }
+  .score-label { font-size: 13px; color: var(--text2); margin-top: 4px; letter-spacing: 0.04em; text-transform: uppercase; }
+  .verdict-badge { display: inline-block; font-size: 13px; font-weight: 700; padding: 5px 16px; border-radius: 20px; margin-top: 10px; letter-spacing: 0.04em; text-transform: uppercase; }
+
+  .breakdown-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 1.25rem 0; }
+  .breakdown-item { background: var(--bg3); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 12px 14px; }
+  .b-label { font-size: 11px; color: var(--text2); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+  .b-score { font-size: 22px; font-weight: 700; color: #fff; }
+  .bar { height: 3px; background: var(--border); border-radius: 2px; margin-top: 8px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 2px; background: var(--accent); transition: width 0.7s cubic-bezier(0.4,0,0.2,1); }
+
+  .roast-text { font-size: 15px; color: var(--text); line-height: 1.75; white-space: pre-wrap; padding: 1rem; background: var(--bg3); border-radius: var(--radius); border-left: 3px solid var(--accent); }
+
+  .share-section { margin-top: 1.25rem; padding-top: 1.25rem; border-top: 0.5px solid var(--border); }
+  .share-label { font-size: 13px; color: var(--text2); margin-bottom: 10px; }
+  .share-row { display: flex; gap: 8px; }
+  .btn-share { flex: 1; height: 40px; font-size: 13px; font-weight: 600; border-radius: var(--radius); border: 0.5px solid var(--border2); background: transparent; color: var(--text); cursor: pointer; transition: all 0.15s; }
+  .btn-share:hover { background: var(--bg3); }
+
+  .loader { display: none; align-items: center; gap: 10px; font-size: 14px; color: var(--text2); padding: 1rem 0; }
+  .loader.show { display: flex; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 1.1s ease-in-out infinite; }
+  .dot:nth-child(2) { animation-delay: 0.18s; }
+  .dot:nth-child(3) { animation-delay: 0.36s; }
+  @keyframes pulse { 0%,100%{opacity:0.2;transform:scale(0.8)} 50%{opacity:1;transform:scale(1)} }
+
+  .progress-wrap { margin-bottom: 1.5rem; }
+  .progress-meta { display: flex; justify-content: space-between; font-size: 12px; color: var(--text2); margin-bottom: 6px; }
+  .progress-bar { height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.35s ease; }
+
+  .q-card { background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem; }
+  .q-num { font-size: 12px; color: var(--accent); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 8px; }
+  .q-text { font-size: 17px; font-weight: 600; color: #fff; margin-bottom: 1rem; line-height: 1.4; }
+  .q-options { display: flex; flex-direction: column; gap: 7px; }
+  .q-opt { padding: 11px 16px; border: 0.5px solid var(--border2); border-radius: var(--radius); font-size: 14px; color: var(--text); cursor: pointer; background: var(--bg3); text-align: left; transition: all 0.12s; line-height: 1.4; }
+  .q-opt:hover { border-color: var(--accent); color: #fff; }
+  .q-opt.selected { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  .ad-slot { margin: 1.5rem 0; padding: 1rem; text-align: center; background: var(--bg2); border: 0.5px dashed var(--border2); border-radius: var(--radius); min-height: 90px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--text3); }
+
+  .footer { text-align: center; padding-top: 2rem; font-size: 13px; color: var(--text3); border-top: 0.5px solid var(--border); margin-top: 2rem; }
+
+  @media (max-width: 480px) {
+    .hero h1 { font-size: 26px; }
+    .score-num { font-size: 56px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="hero">
+    <div class="hero-badge">🔥 AI Powered</div>
+    <h1>How good is your code, <span>really?</span></h1>
+    <p>Paste your code for a brutal AI roast — or take the dev quiz to get your score.</p>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       AD SLOT 2 — TOP BANNER (728x90 desktop / 320x50 mobile)
+       ════════════════════════════════════════════════ -->
+  <div class="ad-slot" id="ad-top"><!-- AD TAG HERE --></div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('roast', this)">🔥 Roast my code</button>
+    <button class="tab" onclick="switchTab('quiz', this)">🏆 Dev score quiz</button>
+  </div>
+
+  <!-- ROAST PANEL -->
+  <div id="panel-roast" class="panel active">
+    <div class="card">
+      <textarea id="code-input" placeholder="Paste your code here... any language, any quality.&#10;We don't judge. Actually — we absolutely do."></textarea>
+      <div class="lang-row">
+        <select id="lang-select">
+          <option value="auto">Auto-detect language</option>
+          <option value="JavaScript">JavaScript</option>
+          <option value="TypeScript">TypeScript</option>
+          <option value="Python">Python</option>
+          <option value="PHP">PHP</option>
+          <option value="Java">Java</option>
+          <option value="CSS">CSS</option>
+          <option value="HTML">HTML</option>
+          <option value="C++">C++</option>
+          <option value="Go">Go</option>
+          <option value="Rust">Rust</option>
+          <option value="SQL">SQL</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <button class="btn-main" id="roast-btn" onclick="doRoast()">🔥 Roast my code</button>
+    </div>
+
+    <div id="roast-result" class="result-box">
+      <div class="loader" id="loader-roast">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        <span>Llama 70B is judging your code...</span>
+      </div>
+      <div id="roast-content" style="display:none">
+        <div class="score-ring">
+          <div><span class="score-num" id="roast-score">—</span><span class="score-denom">/100</span></div>
+          <div class="score-label">code quality score</div>
+          <div class="verdict-badge" id="roast-verdict">—</div>
+        </div>
+        <div class="breakdown-grid" id="breakdown-grid"></div>
+        <div class="roast-text" id="roast-output"></div>
+        <div class="share-section">
+          <div class="share-label">Dare your dev friends to beat your score 👇</div>
+          <div class="share-row">
+            <button class="btn-share" onclick="shareTwitter('roast')">𝕏 Post on X / Twitter</button>
+            <button class="btn-share" onclick="copyShare('roast')">📋 Copy share text</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════
+         AD SLOT 3 — AFTER ROAST RESULT
+         ════════════════════════════════════════════════ -->
+    <div class="ad-slot" id="ad-mid-roast"><!-- AD TAG HERE --></div>
+  </div>
+
+  <!-- QUIZ PANEL -->
+  <div id="panel-quiz" class="panel">
+    <div class="progress-wrap">
+      <div class="progress-meta">
+        <span id="quiz-step-label">Question 1 of 8</span>
+        <span id="quiz-pct-label">0%</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="quiz-progress" style="width:0%"></div></div>
+    </div>
+    <div id="quiz-body"></div>
+
+    <!-- ═══════════════════════════════════════════════════
+         AD SLOT 4 — QUIZ SECTION
+         ════════════════════════════════════════════════ -->
+    <div class="ad-slot" id="ad-mid-quiz"><!-- AD TAG HERE --></div>
+  </div>
+
+  <div class="footer">Built for devs who can handle the truth &nbsp;·&nbsp; Free AI by Cloudflare Workers</div>
+</div>
+
+<script>
+// ─── CONFIG — update these after deploy ──────────────────
+const WORKER_URL = 'YOUR_WORKER_URL_HERE'; // e.g. https://roastmycode-api.YOUR-SUBDOMAIN.workers.dev
+const SITE_URL   = 'YOUR_SITE_URL_HERE';   // e.g. https://roastmycode.pages.dev
+
+// ─── QUESTIONS ───────────────────────────────────────────
+const QUESTIONS = [
+  { q: "You need to push a fix urgently. It's Friday 5pm. You:", opts: ["Push directly to production, no time for PRs", "Branch, commit, PR, wait for review like a professional", "Ask someone else to deal with it", "Push to main and monitor Slack while eating dinner"] },
+  { q: "Your go-to error handling technique:", opts: ["catch(e) { }", "console.log(e) and call it handled", "Proper logging, user-friendly messages, retry logic", "I write code that never errors (liar)"] },
+  { q: "How do you name your variables?", opts: ["x, y, temp, temp2, data, data2", "Meaningful camelCase or snake_case names", "Single letters for speed, comments for clarity", "Whatever ChatGPT suggests"] },
+  { q: "Your code commenting style:", opts: ["Zero comments — the code speaks for itself", "Comments on every non-obvious block", "I comment what I was thinking, delete it later", "// TODO: add comments"] },
+  { q: "How big is your biggest function?", opts: ["800+ lines — it does everything", "Under 50 lines, single responsibility", "As big as it needs to be, don't @ me", "I've never counted and I'm not going to"] },
+  { q: "Your approach to code review:", opts: ["Approve immediately — I trust everyone", "Thorough review, leave constructive comments", "I check if it compiles and approve", "I avoid assigning myself to reviews"] },
+  { q: "How do you handle CSS?", opts: ["Pure inline styles, no shame", "Clean BEM / utility classes, organized stylesheets", "Copy from Stack Overflow until it looks right", "Tailwind everything, never touch raw CSS"] },
+  { q: "Your git commit messages look like:", opts: ["fix, fix2, fix final, fix FINAL 2", "feat: add user authentication with JWT", "wip wip wip wip", "Detailed multi-line commits with context and reasoning"] },
+];
+
+const SCORE_MAP = [
+  [10,100,40,50],[10,60,100,30],[30,100,60,50],[40,100,60,10],
+  [10,100,50,30],[30,100,50,20],[20,100,40,70],[20,80,30,100],
+];
+
+// ─── STATE ───────────────────────────────────────────────
+let roastScore = 0, quizScore = 0, quizAnswers = [], currentQ = 0;
+
+// ─── TABS ────────────────────────────────────────────────
+function switchTab(name, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  btn.classList.add('active');
+  if (name === 'quiz' && currentQ === 0 && quizAnswers.length === 0) startQuiz();
+}
+
+// ─── VERDICT ─────────────────────────────────────────────
+function getVerdict(score) {
+  if (score >= 85) return { label: 'Elite developer',       color: '#1D9E75' };
+  if (score >= 70) return { label: 'Solid dev',             color: '#378ADD' };
+  if (score >= 50) return { label: 'Getting there',         color: '#BA7517' };
+  if (score >= 30) return { label: 'Needs work',            color: '#D85A30' };
+  return              { label: 'Please open a tutorial', color: '#E24B4A' };
+}
+
+// ─── ROAST ───────────────────────────────────────────────
+async function doRoast() {
+  const code = document.getElementById('code-input').value.trim();
+  if (!code) { alert('Paste some code first!'); return; }
+  const lang = document.getElementById('lang-select').value;
+  const btn  = document.getElementById('roast-btn');
+
+  btn.disabled = true;
+  btn.textContent = 'Roasting...';
+
+  const box = document.getElementById('roast-result');
+  box.classList.add('show');
+  document.getElementById('loader-roast').classList.add('show');
+  document.getElementById('roast-content').style.display = 'none';
+
+  try {
+    const res = await fetch(WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type: 'roast', code, lang })
+    });
+    const parsed = await res.json();
+
+    roastScore = Math.min(100, Math.max(0, parseInt(parsed.score) || 50));
+    const { label, color } = getVerdict(roastScore);
+
+    document.getElementById('roast-score').textContent = roastScore;
+    const badge = document.getElementById('roast-verdict');
+    badge.textContent = parsed.verdict || label;
+    badge.style.cssText = `display:inline-block;font-size:13px;font-weight:700;padding:5px 16px;border-radius:20px;margin-top:10px;letter-spacing:0.04em;text-transform:uppercase;background:${color}22;color:${color};border:0.5px solid ${color}55`;
+
+    const dims = [
+      { label: 'Readability',    val: parseInt(parsed.readability)   || 50 },
+      { label: 'Efficiency',     val: parseInt(parsed.efficiency)    || 50 },
+      { label: 'Best practices', val: parseInt(parsed.bestPractices) || 50 },
+      { label: 'Creativity',     val: parseInt(parsed.creativity)    || 50 },
+    ];
+    document.getElementById('breakdown-grid').innerHTML = dims.map(d =>
+      `<div class="breakdown-item">
+        <div class="b-label">${d.label}</div>
+        <div class="b-score">${d.val}</div>
+        <div class="bar"><div class="bar-fill" style="width:0%" data-w="${d.val}%"></div></div>
+      </div>`
+    ).join('');
+    setTimeout(() => document.querySelectorAll('.bar-fill').forEach(b => b.style.width = b.dataset.w), 50);
+
+    document.getElementById('roast-output').textContent = parsed.roast || 'No verdict returned — try again.';
+    document.getElementById('loader-roast').classList.remove('show');
+    document.getElementById('roast-content').style.display = 'block';
+
+  } catch(err) {
+    document.getElementById('loader-roast').classList.remove('show');
+    document.getElementById('roast-content').style.display = 'block';
+    document.getElementById('roast-score').textContent = '?';
+    document.getElementById('roast-output').textContent = 'Worker unreachable. Check WORKER_URL is set correctly.';
+  }
+
+  btn.disabled = false;
+  btn.textContent = '🔥 Roast again';
+}
+
+// ─── QUIZ ─────────────────────────────────────────────────
+function startQuiz() {
+  quizAnswers = []; currentQ = 0; renderQ(0);
+}
+
+function renderQ(i) {
+  const q = QUESTIONS[i];
+  const pct = Math.round((i / QUESTIONS.length) * 100);
+  document.getElementById('quiz-progress').style.width = pct + '%';
+  document.getElementById('quiz-step-label').textContent = `Question ${i+1} of ${QUESTIONS.length}`;
+  document.getElementById('quiz-pct-label').textContent = pct + '%';
+  document.getElementById('quiz-body').innerHTML = `
+    <div class="q-card">
+      <div class="q-num">Question ${i+1} / ${QUESTIONS.length}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="q-options">
+        ${q.opts.map((o,j) => `<button class="q-opt" onclick="pickOpt(${i},${j},this)">${o}</button>`).join('')}
+      </div>
+    </div>`;
+}
+
+function pickOpt(qIdx, optIdx, el) {
+  document.querySelectorAll('.q-opt').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+  quizAnswers[qIdx] = optIdx;
+  setTimeout(() => {
+    if (qIdx < QUESTIONS.length - 1) { currentQ = qIdx + 1; renderQ(currentQ); }
+    else finishQuiz();
+  }, 320);
+}
+
+function finishQuiz() {
+  let total = 0;
+  quizAnswers.forEach((a,i) => { total += (SCORE_MAP[i] || [50,50,50,50])[a]; });
+  quizScore = Math.round(total / QUESTIONS.length);
+  document.getElementById('quiz-progress').style.width = '100%';
+  document.getElementById('quiz-step-label').textContent = 'Complete!';
+  document.getElementById('quiz-pct-label').textContent = '100%';
+  showQuizResult(quizScore);
+}
+
+async function showQuizResult(score) {
+  const { label, color } = getVerdict(score);
+  document.getElementById('quiz-body').innerHTML = `
+    <div class="result-box show">
+      <div class="loader show" id="loader-quiz">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        <span>Llama 70B is writing your verdict...</span>
+      </div>
+      <div id="quiz-result-content" style="display:none">
+        <div class="score-ring">
+          <div><span class="score-num">${score}</span><span class="score-denom">/100</span></div>
+          <div class="score-label">developer score</div>
+          <div class="verdict-badge" style="background:${color}22;color:${color};border:0.5px solid ${color}55;">${label}</div>
+        </div>
+        <div class="roast-text" id="quiz-roast-text" style="margin-top:1rem"></div>
+        <div class="share-section">
+          <div class="share-label">Challenge your dev friends — can they beat you? 👇</div>
+          <div class="share-row">
+            <button class="btn-share" onclick="shareTwitter('quiz')">𝕏 Post on X / Twitter</button>
+            <button class="btn-share" onclick="copyShare('quiz')">📋 Copy share text</button>
+          </div>
+        </div>
+        <button class="btn-main ghost" onclick="startQuiz()" style="margin-top:1rem">↺ Retake quiz</button>
+      </div>
+    </div>`;
+
+  try {
+    const res = await fetch(WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type: 'quiz', quizAnswers, quizScore: score, quizLabel: label, questions: QUESTIONS })
+    });
+    const data = await res.json();
+    document.getElementById('loader-quiz').classList.remove('show');
+    document.getElementById('quiz-result-content').style.display = 'block';
+    document.getElementById('quiz-roast-text').textContent = data.verdict || 'No verdict — try again.';
+  } catch {
+    document.getElementById('loader-quiz').classList.remove('show');
+    document.getElementById('quiz-result-content').style.display = 'block';
+    document.getElementById('quiz-roast-text').textContent = 'Worker unreachable. Your score stands though.';
+  }
+}
+
+// ─── SHARE ────────────────────────────────────────────────
+function shareTwitter(type) {
+  const score = type === 'roast' ? roastScore : quizScore;
+  const text  = type === 'roast'
+    ? `My code just got roasted by AI 💀 I scored ${score}/100. Think you can do better? Try it:`
+    : `I just scored ${score}/100 on the developer quiz 🧑‍💻 Think you're better? Prove it:`;
+  window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text + ' ' + SITE_URL)}`, '_blank');
+}
+
+function copyShare(type) {
+  const score = type === 'roast' ? roastScore : quizScore;
+  const text  = type === 'roast'
+    ? `My code just got roasted by AI 💀 I scored ${score}/100.\nCan you do better? Try it: ${SITE_URL}`
+    : `I just scored ${score}/100 on the developer quiz 🧑‍💻\nThink you're better? Prove it: ${SITE_URL}`;
+  navigator.clipboard.writeText(text)
+    .then(() => alert('Copied! Paste and share anywhere.'))
+    .catch(() => prompt('Copy this:', text));
+}
+</script>
+</body>
+</html>
